@@ -1,0 +1,36 @@
+#main-header,
+body {
+  background-color: #f2f6f7;
+}
+.btn-primary,
+.btn-primary:hover {
+  background-color: rgb(218, 153, 0) !important;
+  border-color: rgb(231, 178, 4) !important;
+  color: #fff;
+}
+.survey-questions{
+    padding: 10px 30px;
+}
+.survey__question__answer-button,
+.survey__question__answer-button:hover {
+  background-color: rgb(231, 178, 4) !important;
+  border: 2px solid rgb(203, 156, 17) !important;
+  color: #fff;
+  border-radius: 20px;
+}
+.text-primary {
+  color: rgb(231, 178, 4) !important;
+}
+.name-bar__item {
+  color: #000000 !important;
+}
+
+.btn-claim-redirect,
+.btn-claim-redirect:hover
+ {
+  background-color: #008700 !important;
+}
+.btn-claim,
+.btn-claim-redirect {
+  color: #fff !important;
+}

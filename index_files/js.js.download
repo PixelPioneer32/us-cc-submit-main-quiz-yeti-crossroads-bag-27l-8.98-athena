@@ -1,0 +1,152 @@
+! function(e, n, t) {
+	"use strict";
+	var a, i = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		r = n.querySelector("#intro-wrap"),
+		o = n.querySelector("#verify-wrap"),
+		s = n.querySelector("#mini-game-wrap"),
+		l = {
+			entranceAnim: "animate__animated animate__fadeInDown--small animate__fast",
+			exitAnim: "animate__animated animate__fadeOutUp--small animate__fast",
+			closeOnOverlayClick: !1
+		},
+		d = new WWModal(n.querySelector("#game-intro"), l),
+		c = new WWModal(n.querySelector("#game-sorry"), l),
+		u = new WWModal(n.querySelector("#congrats"), l),
+		m = n.querySelector("#modal-reserved");
+	if (m) var f = new WWModal(n.querySelector("#modal-reserved"), l);
+	var v = new Confetti;
+	v.startConfetti(), setTimeout(function() {
+		v.stopConfetti()
+	}, 4e3);
+	var h, y, $, p, q, S, g, w, L, A, b, E = {
+			addClass: function e(n, t) {
+				for (var a = (t = t.replace(/\s+/g, " ").trim()).split(" "), i = 0; i < a.length; i++) n.classList.add(a[i])
+			},
+			removeClass: function e(n, t) {
+				for (var a = (t = t.replace(/\s+/g, " ").trim()).split(" "), i = 0; i < a.length; i++) n.classList.remove(a[i])
+			},
+			onAnimationEnd: function e(n, t) {
+				var a = {
+						WebkitAnimation: "webkitAnimationEnd",
+						MozTAnimation: "animationend",
+						animation: "animationend"
+					} [Modernizr.prefixed("animation")],
+					i = function() {
+						n.removeEventListener(a, i), t()
+					};
+				n.addEventListener(a, i)
+			},
+			onTransitionEnd: function e(n, t) {
+				var a = {
+						WebkitTransition: "webkitTransitionEnd",
+						MozTransition: "transitionend",
+						transition: "transitionend"
+					} [Modernizr.prefixed("transition")],
+					i = function() {
+						n.removeEventListener(a, i), t()
+					};
+				n.addEventListener(a, i)
+			}
+		},
+		C = (y = (h = n.querySelector("#prize-wrapid")).querySelector(".iprize-img"), {
+			showPrize: function e() {
+				v.startConfetti(), h.classList.remove("htd-none"), E.addClass(y, "animate__animated animate__rotateIn"), E.onAnimationEnd(y, function() {
+					setTimeout(function() {
+						u.show()
+                        document.getElementById("showImageButton").click(); 
+                        document.getElementById("congrats").style.display = "none";
+					}, 800)
+				})
+			}
+		});
+	($ = 0, p = !1, q = n.querySelector(".mini-game"), S = null, {
+		init: function e() {
+			(function e() {
+				for (var n = q.querySelector(".box").parentNode, t = n.parentNode, a = 0; a < 11; a++) t.appendChild(n.cloneNode(!0))
+			})(),
+			function e() {
+				S = q.querySelectorAll(".box");
+				for (var n = 0; n < S.length; n++) S[n].addEventListener("click", function(e) {
+					var n = this;
+					!($ >= 2 || !p || n.classList.contains("opened")) && (n.classList.add("opened"), p = !1, n.classList.add("open"), 2 === ($ += 1) ? setTimeout(function() {
+						n.classList.add("has-item"), E.onTransitionEnd(n, function() {
+							setTimeout(function() {
+								C.showPrize()
+							}, 1500)
+						})
+					}, 500) : E.onTransitionEnd(n, function() {
+						setTimeout(function() {
+							c.show(), c.onClose(function() {
+								p = !0
+							})
+						}, 800)
+					}))
+				})
+			}(), d.onClose(function() {
+				p = !0
+			})
+		}
+	}).init();
+	var T, _ = (g = 0, L = (w = n.querySelector("#verification-statuses")).querySelector("#astatus-1"), A = w.querySelector("#bstatus-2"), b = w.querySelector("#cstatus-3"), {
+		init: function n() {
+			e.scrollTo(0, 0);
+			var t = setInterval(function() {
+				var e = null;
+				35 === (g += 5) && (e = L), 65 === g && (e = A), 95 === g && (e = b), e && (e.classList.remove("htd-none"), E.addClass(e, "animate__animated animate__fadeIn")), g >= 100 && (clearInterval(t), setTimeout(function() {
+					o.classList.add("htd-none"), s.classList.remove("htd-none"), E.addClass(s, "animate__animated animate__fadeIn"), E.onAnimationEnd(s, function() {
+						d.show()
+					})
+				}, 1e3))
+			}, 350)
+		}
+	});
+	(T = n.querySelector(".survey-questions").querySelectorAll(".survey__question"), {
+		init: function e() {
+			for (var n = 0; n < T.length; n++) ! function(e) {
+				for (var n = T[e], t = n.querySelectorAll(".survey__question__answer-button"), a = 0; a < t.length; a++) t[a].addEventListener("click", function() {
+					if (e + 1 === T.length) {
+						E.addClass(r, "animate__animated animate__fadeOut"), E.onAnimationEnd(r, function() {
+							n.classList.add("hidden"), r.classList.add("htd-none"), o.classList.remove("htd-none"), E.addClass(o, "animate__animated animate__fadeIn"), _.init()
+						});
+						return
+					}
+					var t = T[e + 1];
+					E.addClass(n, "animate__animated animate__fadeOut animate__fast"), E.onAnimationEnd(n, function() {
+						n.classList.add("hidden"), E.addClass(t, "animate__animated animate__fadeIn show")
+					})
+				})
+			}(n)
+		}
+	}).init();
+	for (var k = n.querySelectorAll(".btn-claim-redirect"), x = 0; x < k.length; x++) k[x].addEventListener("click", function(n) {
+		var t = this.getAttribute("data-redirect-link");
+		if (this.classList.contains("show-modal")) {
+			n.preventDefault();
+			var a = this.parentNode.querySelector(".product-list-item__name"),
+				i = a.getAttribute("data-alias");
+			if (i || (i = a.innerText), m) {
+				var r = m.querySelector(".modal-product-name"),
+					o = m.querySelector(".modal-product-name-alias"),
+					s = m.querySelector(".modal-claim-btn");
+				r.innerText = a.innerText, o.innerText = i, s.href = this.href, t && s.setAttribute("data-redirect-link", t), f.show()
+			}
+			return
+		}
+		t && (n.preventDefault(), e.open(this.href, "_blank"), top.window.location.href = t)
+	});
+	(a = n.querySelectorAll(".comment"), {
+		init: function e() {
+			! function e() {
+				for (var n = 0; n < a.length; n++) ! function(e) {
+					var n = a[e].querySelector(".comment__date"),
+						t = new Date;
+					if (e < 7) n.innerText = i[t.getMonth()] + " " + t.getDate() + ", " + t.getFullYear();
+					else {
+						var r = t.getDate() - 1 || 1;
+						n.innerText = i[t.getMonth()] + " " + r + ", " + t.getFullYear()
+					}
+				}(n)
+			}()
+		}
+	}).init()
+}(window, document);
